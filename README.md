@@ -113,3 +113,11 @@ The `logo.svg` and `favicon.svg` in `frontend/` are custom vector wordmarks styl
 ## Deploying to Render.com
 
 See the accompanying step-by-step deployment guide for full instructions, including the important note about persistent storage for `queue.db` on Render's free tier.
+
+Render's filesystem is ephemeral by default — `queue.db` (and everything in it: cars, registrations, queue state) is wiped on every restart, redeploy, or free-tier spin-down. To persist it, attach a [Render Disk](https://render.com/docs/disks) (requires a paid instance type) mounted at a path outside the app's source folder, e.g. `/var/data`, then set:
+
+```bash
+DB_PATH=/var/data/queue.db
+```
+
+Leaving `DB_PATH` unset keeps the previous behavior (`backend/queue.db`), which is fine for local dev but not for a Render deploy you want to persist.

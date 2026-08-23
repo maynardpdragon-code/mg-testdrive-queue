@@ -6,7 +6,11 @@ const fs        = require('fs');
 const path      = require('path');
 const initSqlJs = require('sql.js');
 
-const DB_PATH = path.join(__dirname, 'queue.db');
+// On Render, set DB_PATH to a file inside your attached Disk's mount path
+// (e.g. /var/data/queue.db) so the database survives restarts/redeploys —
+// the default below is only safe for local dev, since Render's filesystem
+// is otherwise wiped on every restart.
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'queue.db');
 
 let _db = null;
 let _ready = false;
