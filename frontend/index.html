@@ -12,22 +12,41 @@
 <body>
 
     <!-- ═══════════════════════════ NAVIGATION ══════════════════════════════ -->
-    <nav class="nav">
+    <nav class="nav" id="main-nav" style="display:none;">
         <a href="/" class="logo">
             <img src="assets/mg-logo.webp" alt="MG Test Drive Experience" width="58" height="58">
         </a>
-        <div class="nav-links">
-            <button onclick="showPage('display')" class="active" id="nav-display">Display</button>
+        <div class="nav-links" id="nav-links">
+            <button onclick="showPage('display')" id="nav-display">Display</button>
             <button onclick="showPage('register')" id="nav-register">Register</button>
             <button onclick="showPage('ticket')" id="nav-ticket">My Ticket</button>
             <button onclick="showPage('admin')" id="nav-admin">Admin</button>
         </div>
+        <button onclick="logout()" id="nav-logout" class="btn-logout" title="Log out">⏻ Logout</button>
     </nav>
 
     <div class="notification" id="notification"></div>
 
+    <!-- ═══════════════════════ PAGE: SIGN IN ═══════════════════════════════ -->
+    <div class="page active" id="page-login">
+        <div class="admin-login">
+            <h2 class="admin-login-title">🔐 Sign In</h2>
+            <form id="auth-login-form">
+                <div class="form-group">
+                    <label style="color: #ffffff;"><b>Username</b></label>
+                    <input type="text" id="auth-username" required placeholder="Enter username" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label style="color: #ffffff;"><b>Password</b></label>
+                    <input type="password" id="auth-password" required placeholder="Enter password" autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+        </div>
+    </div>
+
     <!-- ═══════════════════════ PAGE: DISPLAY ═══════════════════════════════ -->
-    <div class="page active" id="page-display">
+    <div class="page" id="page-display">
         <div class="display-container">
             <h1 class="display-header" style="color: #ffffff;">MG Motor Test Drive Experience</h1>
             <div class="car-displays" id="car-displays"></div>
@@ -102,29 +121,12 @@
     </div>
 
     <!-- ═══════════════════════ PAGE: ADMIN ═════════════════════════════════ -->
+    <!-- Reachable only once the global sign-in above has confirmed the admin
+         role, so there's no separate nested login here anymore. -->
     <div class="page" id="page-admin">
-
-        <!-- Login -->
-        <div class="admin-login" id="admin-login">
-            <h2 class="admin-login-title">🔐 Admin Login</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label style="color: #ffffff;"><b>Username</b></label>
-                    <input type="text" id="admin-username" required placeholder="Enter username">
-                </div>
-                <div class="form-group">
-                    <label style="color: #ffffff;"><b>Password</b></label>
-                    <input type="password" id="admin-password" required placeholder="Enter password">
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-        </div>
-
-        <!-- Dashboard (hidden until logged in) -->
-        <div class="admin-dashboard" id="admin-dashboard">
+        <div class="admin-dashboard active" id="admin-dashboard">
             <div class="admin-header">
                 <h1 class="admin-title" style="color: #ffffff;">📊 Admin Dashboard</h1>
-                <button class="btn btn-secondary" onclick="adminLogout()" style="width:auto;">Logout</button>
             </div>
 
             <div class="admin-tabs">
@@ -219,10 +221,11 @@
         </div>
     </div>
 
-    <!-- JavaScript modules (order matters: api -> ui -> admin -> app, since app.js
-         calls functions defined in ui.js/admin.js as soon as it loads) -->
+    <!-- JavaScript modules (order matters: api -> ui -> auth -> admin -> app, since
+         app.js/admin.js call functions defined in ui.js/auth.js as soon as they load) -->
     <script src="/js/api.js"></script>
     <script src="/js/ui.js"></script>
+    <script src="/js/auth.js"></script>
     <script src="/js/admin.js"></script>
     <script src="/js/app.js"></script>
 

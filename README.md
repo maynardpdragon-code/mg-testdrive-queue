@@ -59,14 +59,29 @@ The database file (`queue.db`) is created automatically in the `backend/` folder
 
 ## Configuration
 
-### Admin credentials
+### Login roles
 
-Default: `admin` / `Dragonai2026!`
+The site is gated behind a single sign-in screen. Which credentials you enter decides what you see next — each role is meant for a different device:
 
-**Change this before going live.** Override with environment variables before starting the server:
+| Role | Unlocks | Typical device |
+|------|---------|----------------|
+| **Admin** | Every tab: Display, Register, My Ticket, Admin dashboard | Staff laptop/phone |
+| **Display** | Only the Display tab (live queue status) | TV/projector for public viewing |
+| **Register** | Only the Register tab — submitting auto-prints the ticket and resets the form for the next guest, kiosk-style | Tablet for self-service registration |
+
+A device stays signed in across refreshes/restarts (cached in the browser's local storage) — use the Logout button in the corner to switch roles on that device.
+
+**Admin** — default: `admin` / `Dragonai2026!`. **Change this before going live.** Override with environment variables:
 
 ```bash
 ADMIN_USER=myuser ADMIN_PASS=mypassword npm start
+```
+
+**Display** and **Register** have no default — each is disabled until you set both its username and password:
+
+```bash
+DISPLAY_USER=tvscreen   DISPLAY_PASS=mypassword
+REGISTER_USER=kiosk     REGISTER_PASS=mypassword
 ```
 
 ### SMS notifications (Traccar SMS Gateway)

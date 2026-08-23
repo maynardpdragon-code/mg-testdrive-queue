@@ -19,7 +19,7 @@ function showPage(pageId) {
     if (pageId === 'display')  renderDisplayCards();
     if (pageId === 'ticket')   checkCurrentTicket();
     if (pageId === 'register') renderRegistrationCars();
-    if (pageId === 'admin' && isAdminLoggedIn) {
+    if (pageId === 'admin' && currentRole === 'admin') {
         renderCalloutDashboard();
         updateResponseTable();
     }

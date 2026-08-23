@@ -71,6 +71,20 @@ body {
     box-shadow: 0 0 16px rgba(227, 6, 19, 0.5);
 }
 
+.btn-logout {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+.btn-logout:hover { border-color: var(--primary); color: #ffffff; }
+
 /* ── Page Container ── */
 .page { display: none; padding: 2rem; max-width: 1400px; margin: 0 auto; animation: fadeIn 0.3s ease; }
 .page.active { display: block; }

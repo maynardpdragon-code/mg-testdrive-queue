@@ -1,34 +1,6 @@
 // frontend/js/admin.js
-// Admin: login, tabs, callout dashboard, car manager, exports
-
-// ── State ─────────────────────────────────────────────────────────────────────
-let isAdminLoggedIn = false;
-
-// ── Login / Logout ────────────────────────────────────────────────────────────
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('admin-username').value;
-    const password = document.getElementById('admin-password').value;
-    try {
-        await AuthAPI.login({ username, password });
-        isAdminLoggedIn = true;
-        document.getElementById('admin-login').style.display = 'none';
-        document.getElementById('admin-dashboard').classList.add('active');
-        renderCalloutDashboard();
-        updateResponseTable();
-        showNotification('Login successful!');
-    } catch {
-        showNotification('Invalid credentials', 'error');
-    }
-});
-
-function adminLogout() {
-    isAdminLoggedIn = false;
-    document.getElementById('admin-login').style.display = 'block';
-    document.getElementById('admin-dashboard').classList.remove('active');
-    document.getElementById('login-form').reset();
-    showNotification('Logged out');
-}
+// Admin: tabs, callout dashboard, car manager, exports
+// (Login/logout for all three roles, including admin, lives in auth.js.)
 
 // ── Admin Tabs ────────────────────────────────────────────────────────────────
 function showAdminPanel(panel, event) {
