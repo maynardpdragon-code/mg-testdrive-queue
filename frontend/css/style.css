@@ -184,7 +184,6 @@ body {
 .car-option.selected { border-color: var(--primary); background: rgba(227, 6, 19, 0.16); box-shadow: 0 0 16px rgba(227, 6, 19, 0.25); }
 .car-option input { display: none; }
 .car-option-name { font-weight: bold; margin-top: 0.5rem; font-size: 0.95rem; }
-.car-option-icon { font-size: 2rem; }
 
 /* ── Buttons ── */
 .btn {
