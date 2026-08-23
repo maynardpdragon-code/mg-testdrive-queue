@@ -20,8 +20,8 @@
 // with TRACCAR_SMS_ENABLED unset (or not "true"), call-next simply skips it.
 
 const ENABLED      = String(process.env.TRACCAR_SMS_ENABLED || '').toLowerCase() === 'true';
-const GATEWAY_URL   = process.env.TRACCAR_SMS_URL || 'http://192.168.100.158:8082';
-const GATEWAY_TOKEN = process.env.TRACCAR_SMS_TOKEN || 'de4f7aa6-0234-4849-a55c-7fe6da8e41e5';
+const GATEWAY_URL   = process.env.TRACCAR_SMS_URL || 'https://www.traccar.org/sms/';
+const GATEWAY_TOKEN = process.env.TRACCAR_SMS_TOKEN || 'eEOY7tmPQKuYrnkPHXSFUx:APA91bE8vKZiClfofiXwJxOVh2ULi3U2wJ_uK4jQbfrLXbJqPFbN_eZ10AzVqTzEOfLC24L32ddriQcB4Opi1tIjtVgAYHSsHflByiis91EcTZKeockM2K4';
 const COUNTRY_CODE  = process.env.TRACCAR_SMS_COUNTRY_CODE || '+63';
 const SIM_SLOT      = process.env.TRACCAR_SMS_SIM_SLOT; // optional: "0" or "1" for dual-SIM phones
 const TIMEOUT_MS    = 10000;
