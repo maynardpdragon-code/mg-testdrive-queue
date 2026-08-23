@@ -49,6 +49,17 @@ body {
 
 .logo { display: flex; align-items: center; text-decoration: none; }
 
+.nav-brand { display: flex; align-items: center; gap: 1rem; }
+.nav-brand-title {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 16px rgba(227, 6, 19, 0.45);
+    white-space: nowrap;
+}
+
 .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
 .nav-links button {
     background: transparent;
@@ -73,17 +84,17 @@ body {
 
 .btn-logout {
     background: transparent;
-    border: 2px solid var(--border);
-    color: var(--text-muted);
-    padding: 0.5rem 1rem;
+    border: none;
+    color: #2a2a2a;
+    padding: 0.5rem 0.7rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    font-size: 1rem;
+    line-height: 1;
     transition: all 0.3s ease;
+    opacity: 0.6;
 }
-.btn-logout:hover { border-color: var(--primary); color: #ffffff; }
+.btn-logout:hover { color: var(--primary); opacity: 1; background: rgba(255,255,255,0.05); }
 
 /* ── Page Container ── */
 .page { display: none; padding: 2rem; max-width: 1400px; margin: 0 auto; animation: fadeIn 0.3s ease; }
@@ -96,15 +107,6 @@ body {
 
 /* ── Display Page ── */
 .display-container { text-align: center; padding: 2rem; }
-.display-header {
-    font-size: 2.25rem;
-    margin-bottom: 2rem;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 800;
-    text-shadow: 0 0 24px rgba(227, 6, 19, 0.55);
-}
 
 .car-displays {
     display: grid;

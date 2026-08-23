@@ -27,6 +27,10 @@ function applyRole(role) {
     ['display', 'register', 'ticket', 'admin'].forEach(p => {
         document.getElementById(`nav-${p}`).style.display = allowed.includes(p) ? '' : 'none';
     });
+    // Single-page roles (Display/Register kiosks) have nothing to switch
+    // between, so the nav links row would just be one pointless button —
+    // hide the whole row for a cleaner kiosk/TV look.
+    document.getElementById('nav-links').style.display = allowed.length > 1 ? '' : 'none';
 
     if (typeof startApp === 'function') startApp();
     showPage(ROLE_DEFAULT_PAGE[role] || allowed[0]);

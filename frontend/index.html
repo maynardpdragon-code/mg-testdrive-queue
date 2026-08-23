@@ -13,16 +13,19 @@
 
     <!-- ═══════════════════════════ NAVIGATION ══════════════════════════════ -->
     <nav class="nav" id="main-nav" style="display:none;">
-        <a href="/" class="logo">
-            <img src="assets/mg-logo.webp" alt="MG Test Drive Experience" width="58" height="58">
-        </a>
+        <div class="nav-brand">
+            <a href="/" class="logo">
+                <img src="assets/mg-logo.webp" alt="MG Test Drive Experience" width="58" height="58">
+            </a>
+            <span class="nav-brand-title">MG Motor Test Drive Experience</span>
+        </div>
         <div class="nav-links" id="nav-links">
             <button onclick="showPage('display')" id="nav-display">Display</button>
             <button onclick="showPage('register')" id="nav-register">Register</button>
             <button onclick="showPage('ticket')" id="nav-ticket">My Ticket</button>
             <button onclick="showPage('admin')" id="nav-admin">Admin</button>
         </div>
-        <button onclick="logout()" id="nav-logout" class="btn-logout" title="Log out">⏻ Logout</button>
+        <button onclick="logout()" id="nav-logout" class="btn-logout" title="Log out">⏻</button>
     </nav>
 
     <div class="notification" id="notification"></div>
@@ -48,7 +51,6 @@
     <!-- ═══════════════════════ PAGE: DISPLAY ═══════════════════════════════ -->
     <div class="page" id="page-display">
         <div class="display-container">
-            <h1 class="display-header" style="color: #ffffff;">MG Motor Test Drive Experience</h1>
             <div class="car-displays" id="car-displays"></div>
         </div>
     </div>
