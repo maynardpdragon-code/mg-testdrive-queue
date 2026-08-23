@@ -59,7 +59,7 @@ async function renderCalloutDashboard() {
             card.innerHTML = `
                 <div class="callout-card-header">
                     <span class="callout-car-name">
-                        ${car.icon} ${car.model}
+                    ${car.model}
                         ${car.plate ? `<span style="font-size:0.8rem; font-weight:normal;">(${car.plate})</span>` : ''}
                     </span>
                     <span class="callout-status ${car.available ? 'status-available' : 'status-in-use'}">
