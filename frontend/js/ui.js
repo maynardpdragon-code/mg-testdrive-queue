@@ -98,7 +98,6 @@ async function renderRegistrationCars() {
         container.innerHTML = cars.map(car => `
             <label class="car-option" onclick="selectCar(this)">
                 <input type="radio" name="car" value="${car.id}" required>
-                <div class="car-option-icon">${car.icon}</div>
                 <div class="car-option-name">${car.model}</div>
                 ${car.plate ? `<div style="font-size:0.8rem; color:var(--text-muted)">${car.plate}</div>` : ''}
             </label>
