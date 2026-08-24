@@ -50,11 +50,16 @@ router.post('/', async (req, res) => {
             const ticketNumber = `${prefix}-${String(counter).padStart(3,'0')}`;
             const now = new Date();
             const carDisplay = `${car.model}${car.plate ? ` (${car.plate})` : ''}`;
+            // Format explicitly in Philippine time (UTC+8) so the ticket shows the
+            // correct local time no matter what timezone the server itself runs in
+            // (Render's containers default to UTC, which was causing the mismatch).
+            const phDate = now.toLocaleDateString('en-PH', { timeZone: 'Asia/Manila' });
+            const phTime = now.toLocaleTimeString('en-PH', { timeZone: 'Asia/Manila' });
             db.run(`INSERT INTO registrations (ticket_number,name,address,contact,car_id,car_display,status,timestamp,date,time)
                     VALUES (?,?,?,?,?,?,'waiting',?,?,?)`,
                 ticketNumber, name.trim(), address.trim(), contact.trim(),
                 carId, carDisplay, now.getTime(),
-                now.toLocaleDateString(), now.toLocaleTimeString());
+                phDate, phTime);
             const id = db.lastInsertRowid();
             newReg = db.get('SELECT * FROM registrations WHERE id = ?', id);
         });
