@@ -31,12 +31,14 @@ document.getElementById('registration-form').addEventListener('submit', async fu
     const name    = document.getElementById('reg-name').value.trim();
     const address = document.getElementById('reg-address').value.trim();
     const contact = document.getElementById('reg-contact').value.trim();
+    const dealer  = document.getElementById('reg-dealer').value.trim();
+    const scName  = document.getElementById('reg-scname').value.trim();
     const carInput = document.querySelector('input[name="car"]:checked');
 
     if (!carInput) return showNotification('Please select a car model', 'error');
 
     try {
-        const reg = await RegistrationsAPI.create({ name, address, contact, carId: carInput.value });
+        const reg = await RegistrationsAPI.create({ name, address, contact, dealer, scName, carId: carInput.value });
         localStorage.setItem('currentTicketId', reg.id);
 
         this.reset();

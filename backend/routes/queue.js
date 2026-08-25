@@ -75,7 +75,22 @@ router.post('/:carId/skip', async (req, res) => {
         if (!status) return res.status(404).json({ error: 'Car not found' });
         if (!status.current_serving_id) return res.status(400).json({ error: 'No active service' });
         db.transaction(() => {
-            db.run("UPDATE registrations SET status = 'completed' WHERE id = ?", status.current_serving_id);
+            const skippedId = status.current_serving_id;
+            const skippedReg = db.get('SELECT * FROM registrations WHERE id = ?', skippedId);
+            const waiting = db.all("SELECT * FROM registrations WHERE car_id = ? AND status = 'waiting' ORDER BY timestamp ASC", carId);
+
+            // Put the skipped customer back in the queue, one slot behind
+            // whoever is now first in line, so they're still called next
+            // after that person instead of being dropped entirely.
+            const reordered = waiting.length > 0
+                ? [waiting[0], skippedReg, ...waiting.slice(1)]
+                : [skippedReg];
+            const base = reordered[0].timestamp;
+            reordered.forEach((r, i) => {
+                db.run('UPDATE registrations SET timestamp = ? WHERE id = ?', base + i, r.id);
+            });
+
+            db.run("UPDATE registrations SET status = 'waiting' WHERE id = ?", skippedId);
             db.run('UPDATE car_status SET current_serving_id = NULL, available = 1, calling = 0 WHERE car_id = ?', carId);
         });
         res.json({ success: true });

@@ -5,7 +5,7 @@ const { getDB } = require('../db');
 
 function mapReg(r) {
     return { id:r.id, ticketNumber:r.ticket_number, name:r.name, address:r.address,
-             contact:r.contact, carId:r.car_id, carDisplay:r.car_display,
+             contact:r.contact, dealer:r.dealer, scName:r.sc_name, carId:r.car_id, carDisplay:r.car_display,
              status:r.status, timestamp:r.timestamp, date:r.date, time:r.time };
 }
 
@@ -34,9 +34,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const db = await getDB();
-        const { name, address, contact, carId } = req.body;
+        const { name, address, contact, dealer = '', scName = '', carId } = req.body;
         if (!name?.trim() || !address?.trim() || !contact?.trim() || !carId)
-            return res.status(400).json({ error: 'All fields (name, address, contact, carId) are required.' });
+            return res.status(400).json({ error: 'Name, address, contact, and carId are required.' });
         if (!/^09\d{9}$/.test(contact.trim()))
             return res.status(400).json({ error: 'Contact must be an 11-digit PH mobile number (e.g. 09171234567).' });
         const car = db.get('SELECT * FROM cars WHERE id = ?', carId);
@@ -50,9 +50,10 @@ router.post('/', async (req, res) => {
             const ticketNumber = `${prefix}-${String(counter).padStart(3,'0')}`;
             const now = new Date();
             const carDisplay = `${car.model}${car.plate ? ` (${car.plate})` : ''}`;
-            db.run(`INSERT INTO registrations (ticket_number,name,address,contact,car_id,car_display,status,timestamp,date,time)
-                    VALUES (?,?,?,?,?,?,'waiting',?,?,?)`,
+            db.run(`INSERT INTO registrations (ticket_number,name,address,contact,dealer,sc_name,car_id,car_display,status,timestamp,date,time)
+                    VALUES (?,?,?,?,?,?,?,?,'waiting',?,?,?)`,
                 ticketNumber, name.trim(), address.trim(), contact.trim(),
+                dealer.trim(), scName.trim(),
                 carId, carDisplay, now.getTime(),
                 now.toLocaleDateString(), now.toLocaleTimeString());
             const id = db.lastInsertRowid();

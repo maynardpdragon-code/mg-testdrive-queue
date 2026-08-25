@@ -119,6 +119,8 @@ function getDB() {
             name TEXT NOT NULL,
             address TEXT NOT NULL,
             contact TEXT NOT NULL,
+            dealer TEXT NOT NULL DEFAULT '',
+            sc_name TEXT NOT NULL DEFAULT '',
             car_id TEXT NOT NULL,
             car_display TEXT NOT NULL,
             status TEXT NOT NULL DEFAULT 'waiting',
@@ -126,6 +128,11 @@ function getDB() {
             date TEXT NOT NULL,
             time TEXT NOT NULL
         )`);
+
+        // Migrate existing databases created before dealer/sc_name existed.
+        const regColumns = _db.exec('PRAGMA table_info(registrations)')[0]?.values.map(v => v[1]) || [];
+        if (!regColumns.includes('dealer'))  _db.run(`ALTER TABLE registrations ADD COLUMN dealer TEXT NOT NULL DEFAULT ''`);
+        if (!regColumns.includes('sc_name')) _db.run(`ALTER TABLE registrations ADD COLUMN sc_name TEXT NOT NULL DEFAULT ''`);
 
         _db.run(`CREATE TABLE IF NOT EXISTS car_status (
             car_id TEXT PRIMARY KEY,

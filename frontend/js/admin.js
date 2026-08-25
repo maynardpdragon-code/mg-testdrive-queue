@@ -162,6 +162,8 @@ async function updateResponseTable() {
                 <td><strong>${reg.ticketNumber}</strong></td>
                 <td>${reg.name}</td>
                 <td>${reg.contact}</td>
+                <td>${reg.dealer || ''}</td>
+                <td>${reg.scName || ''}</td>
                 <td>${reg.carDisplay}</td>
                 <td><span class="status-badge status-${reg.status}">${reg.status}</span></td>
                 <td>${reg.date} ${reg.time}</td>
@@ -174,7 +176,7 @@ async function updateResponseTable() {
             tbody.appendChild(tr);
         });
     } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="7" style="color:var(--text-muted)">Error loading data</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="9" style="color:var(--text-muted)">Error loading data</td></tr>`;
     }
 }
 
@@ -204,8 +206,8 @@ async function exportToCSV() {
     const regs = await RegistrationsAPI.list();
     if (regs.length === 0) return showNotification('No data to export', 'error');
 
-    const rows   = regs.map(r => [r.ticketNumber, r.name, r.address, r.contact, r.carDisplay, r.status, r.date, r.time]);
-    const header = ['Ticket #','Name','Address','Contact','Car Model','Status','Date','Time'];
+    const rows   = regs.map(r => [r.ticketNumber, r.name, r.address, r.contact, r.dealer, r.scName, r.carDisplay, r.status, r.date, r.time]);
+    const header = ['Ticket #','Name','Address','Contact','Dealer','SC Name','Car Model','Status','Date','Time'];
     const csv    = [header, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
 
     const a = Object.assign(document.createElement('a'), {
@@ -224,6 +226,7 @@ async function exportToPDF() {
     const rows = regs.map(r => `
         <tr>
             <td>${r.ticketNumber}</td><td>${r.name}</td><td>${r.contact}</td>
+            <td>${r.dealer || ''}</td><td>${r.scName || ''}</td>
             <td>${r.carDisplay}</td><td>${r.status}</td><td>${r.date} ${r.time}</td>
         </tr>`).join('');
 
@@ -235,7 +238,7 @@ async function exportToPDF() {
         </head><body>
         <h1>🚗 MG Test Drive Registrations</h1>
         <p>Generated: ${new Date().toLocaleString()}</p>
-        <table><tr><th>Ticket #</th><th>Name</th><th>Contact</th><th>Car</th><th>Status</th><th>Date/Time</th></tr>
+        <table><tr><th>Ticket #</th><th>Name</th><th>Contact</th><th>Dealer</th><th>SC Name</th><th>Car</th><th>Status</th><th>Date/Time</th></tr>
         ${rows}</table></body></html>`;
 
     const w = window.open('', '_blank');
