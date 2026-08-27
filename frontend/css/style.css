@@ -223,7 +223,7 @@ body {
 .btn-secondary:hover { border-color: var(--primary); background: rgba(227, 6, 19, 0.08); }
 
 /* ── Ticket Page ── */
-.ticket-container { max-width: 400px; margin: 0 auto; text-align: center; }
+.ticket-container { max-width: 906px; margin: 0 auto; text-align: center; }
 .ticket {
     background: #ffffff;
     color: #111111;
